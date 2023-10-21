@@ -42,6 +42,38 @@
 // 3. Uses fetch() at the modified endpoint
 // 4. Using the chosen approach (promise chaining or async/await), convert the response to json and return the data in its entirety
 
+async function getCatFacts(numFacts) {
+  try {
+    let response = await fetch(`https://catfact.ninja/facts?limit=${numFacts}`);
+    let json = await response.json();
+    return json;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+async function fetchCatFacts() {
+  try {
+    
+    let numFacts = 5;
+    let catFacts = await getCatFacts(numFacts);
+    
+    
+    if (catFacts && catFacts.data) {
+      catFacts.data.forEach(fact => {
+        console.log(fact.fact);
+      });
+    } else {
+      console.log('Failed to fetch cat facts.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+fetchCatFacts();
+
 
 
 //END OF ASSIGNMENT
